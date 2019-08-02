@@ -1,0 +1,111 @@
+---
+title: "Module 8-Final_Project"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Reading the required libraried and data from 2 different sources
+
+```{r }
+setwd("D://Data Analytics")
+library(caret);library(rattle); library(rpart)
+```
+
+
+```{r Loading data}
+OriTrain <- read.csv("pml-training.csv")
+OriTest <- read.csv("pml-testing.csv")
+dim(OriTrain);dim(OriTest)
+```
+ Looking at the train data
+```{r glance at train data}
+str(OriTrain)
+```
+ If the column data is less than 70% it is diffcult to impute. So we are looking the columns which are having more than 70% nulls
+
+``` {r Remove columns if contains more than 70% nulls}
+NullColumns <- which(colSums(is.na(OriTrain) |OriTrain=="")>0.7*dim(OriTrain)[1]) 
+OriTrain<- OriTrain[,-NullColumns]
+```
+Removing 7 variables as we do not need that information 
+```{r removing unneccessary variables}
+OriTrain <- OriTrain[,-c(1:7)]
+## Data After removing nulls and non-important columns
+dim(OriTrain)
+```
+
+
+To check the efficiancy of the model, we are splitting the training data into train and test before implementing on actual test data
+
+```{r Splitting train data into train and test data}
+set.seed(12345)
+inTrain <- createDataPartition(OriTrain$classe, p=0.75, list=FALSE)
+train <- OriTrain[inTrain,]
+test <- OriTrain[-inTrain,]
+dim(train); dim(test)
+```
+We will check the accuracy by applying multiple models. Below is Classification Model
+
+```{r Applying Classification model}
+
+tcontrol <- trainControl(method="cv", number=5)
+CTModel <- train(classe~., data=train, method="rpart", trControl=tcontrol)
+fancyRpartPlot(CTModel$finalModel)
+```
+
+Prdiction of Test data using Cross-Validation Model
+
+```{r prediction for test data using CV model}
+pred <- predict(CTModel,newdata=test)
+confMat <- confusionMatrix(test$classe,pred)
+confMat$table; confMat$overall[1]
+
+```
+
+Random Forest Model prediction using Train data
+
+```{r Predicting with Random Forests}
+control1 <- trainControl(method="cv", number=5)
+Model1 <- train(classe~., data=train, method="rf", trControl=control1, verbose=FALSE)
+
+print(Model1)
+
+```
+Test data model prediction
+
+
+```{r test prediction}
+pred <- predict(Model1,newdata=test)
+
+confMat1 <- confusionMatrix(test$classe,pred)
+confMat1$overall[1];Model1$finalModel$classes
+
+```
+Gradient Boosting model
+
+```{r Prediction with Gradient Boosting}
+control1 <- trainControl(method="cv", number=5)
+Model2 <- train(classe~., data=train, method="gbm", trControl=control1, verbose=FALSE)
+print(Model2)
+
+```
+
+```{r test prediction with Gradient Boosting}
+pred <- predict(Model2,newdata=test)
+
+confMat2 <- confusionMatrix(test$classe,pred)
+confMat2$table
+print(confMat2)
+
+```
+Applying better model 
+
+```{r Applying Final model on original test data}
+
+OriTestpred <- predict(Model1, newdata=OriTest)
+OriTestpred
+
+```
