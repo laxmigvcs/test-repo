@@ -1,0 +1,41 @@
+---
+title: "Week 2 Assignment"
+author: "laxmi"
+date: "05/08/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Data frame for passing longitude and latitude values
+ 
+```{r data frame}
+library(leaflet)
+ 
+Lng_Lat <- data.frame (
+lat = c(42.4822,42.2139,42.9144,42.5781,42.3214,42.2394,42.4331),
+lng = c(20.7458,20.7397,20.6897,21.5803,21.3583,21.0272,21.0397)
+)
+```
+Lng_Lat
+ 
+```{r hyperlinks}
+Cities <- c("<a href= 'https://simplemaps.com/data/world-cities'>Lat and Long data</a>")
+```
+ 
+ 
+## Including Plots
+ 
+You can also embed plots, for example:
+ 
+```{r test}
+ 
+Lng_Lat %>%
+leaflet () %>%
+addTiles()  %>%
+addMarkers(popup=Cities)
+
+ 
+```
+
