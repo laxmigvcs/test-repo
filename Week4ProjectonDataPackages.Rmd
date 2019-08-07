@@ -24,7 +24,8 @@ Form of Input used: Radio Button
 
 Reactive output Line chart displayed based on the selections
 
-The server.R and ui.R codes are posted on github at:https://github.com/SuryaV21/Test-Repo/tree/gh-pages/Week_4_Project
+The server.R and ui.R codes are posted on github at:https://github.com/laxmigvcs/test-repo/blob/gh-pages/ui.R
+https://github.com/laxmigvcs/test-repo/blob/gh-pages/server.R
 
 This app is hosted at: https://laxmigvcs.shinyapps.io/week4assignment/
 
@@ -33,7 +34,6 @@ This app is hosted at: https://laxmigvcs.shinyapps.io/week4assignment/
 library(plotly)
 library(shiny)
 
-# Define UI for application that draws a histogram
 shinyUI(fluidPage(
     
     radioButtons('variable', 'choose selection', choices = c('hp','disp'), selected = 'hp',
@@ -46,7 +46,6 @@ shinyUI(fluidPage(
 library(shiny)
 library(plotly)
 
-# Define server logic required to draw a histogram
 shinyServer(function(input, output) {
     
     output$plot1 <- renderPlotly({
@@ -63,8 +62,6 @@ shinyServer(function(input, output) {
     })
     
 })
-
-
 
 
 
