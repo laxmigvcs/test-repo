@@ -1,0 +1,79 @@
+---
+title: "Week4Assignment"
+author: "laxmi"
+date: "07/08/2019"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Overview
+
+
+Week 4 Assignment to Develop Data Products. This app is dynamic line chart based on what is selected
+
+The project includes: Radio button 
+
+
+
+## Application Contains
+
+Form of Input used: Radio Button
+
+Reactive output Line chart displayed based on the selections
+
+The server.R and ui.R codes are posted on github at:https://github.com/SuryaV21/Test-Repo/tree/gh-pages/Week_4_Project
+
+This app is hosted at: https://laxmigvcs.shinyapps.io/week4assignment/
+
+## Shiny Code
+
+library(plotly)
+library(shiny)
+
+# Define UI for application that draws a histogram
+shinyUI(fluidPage(
+    
+    radioButtons('variable', 'choose selection', choices = c('hp','disp'), selected = 'hp',
+                 inline = FALSE, width = NULL, choiceNames = NULL,
+                 choiceValues = NULL)
+    ,plotlyOutput("plot1")
+))
+
+
+library(shiny)
+library(plotly)
+
+# Define server logic required to draw a histogram
+shinyServer(function(input, output) {
+    
+    output$plot1 <- renderPlotly({
+        
+        if (input$variable == 'hp') {
+            
+            plot_ly(mtcars, x= ~wt, y = ~hp,type = "scatter", mode = "lines+markers", color = ~as.factor(cyl))
+        }
+        
+        else {
+            plot_ly(mtcars, x= ~wt, y = ~disp,type = "scatter", mode = "lines+markers", color = ~as.factor(cyl))  
+        }
+        
+    })
+    
+})
+
+
+
+
+
+## output
+
+``` {r}
+library(plotly)
+plot_ly(mtcars, x= ~wt, y = ~hp,type = "scatter", mode = "lines+markers", color = ~as.factor(cyl))
+```
+
+
+
