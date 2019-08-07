@@ -1,0 +1,14 @@
+---
+title: "Week 3 Assignment on Data packages"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r mtcars, echo = FALSE}
+library(plotly)
+head(mtcars)
+plot_ly(mtcars, x= ~wt, y = ~disp,type = "scatter", mode = "lines+markers", color = ~as.factor(cyl))
+```
