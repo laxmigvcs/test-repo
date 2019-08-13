@@ -1,0 +1,23 @@
+---
+title: "CapstoneProjectWeek7"
+author: "laxmi"
+date: "13/08/2019"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Info 
+The goal of this project is to predict the next word when an incomplete sentence is given.
+
+## App Interface
+When the user enters part of a sentence in the give box then the next word prediction logic will get activated and the most probable anwsers will be displayed in the options. 
+
+##  Results
+When the options are displayed on the list, the user can choose the best answer.
+
+## Supporting Documentation:
+1. About, ReadMe, PNG and JPG files: Available on the (https://github.com/laxmigvcs/test-repo)
+2. Shiny App is available in shinnyapp.io (https://laxmigvcs.shinyapps.io/week_7_final_project/)
